@@ -92,13 +92,18 @@
                     <div class="collapse show" id="navbar-examples">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('users') }}">
+                                    {{ __('users') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('posts') }}">
                                     {{ __('posts') }}
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('users') }}">
-                                    {{ __('users') }}
+                                <a class="nav-link" href="{{ route('comments') }}">
+                                    {{ __('comments') }}
                                 </a>
                             </li>
                         </ul>

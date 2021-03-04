@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,8 @@ Route::group(['middleware' => 'auth'], function () {
 	 Route::get('icons', function () {return view('pages.icons');})->name('icons');
     Route::get('posts', [PostController::class, 'index'])->name('posts');
     Route::post('posts/{post}', [PostController::class, 'destroy'])->name('posts.delete');
+    Route::get('comments', [CommentController::class, 'index'])->name('comments');
+    Route::post('comments/{comment}', [CommentController::class, 'destroy'])->name('comments.delete');
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 

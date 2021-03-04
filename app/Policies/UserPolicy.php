@@ -5,7 +5,7 @@ namespace App\Policies;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class PostPolicy
+class UserPolicy
 {
     use HandlesAuthorization;
 
@@ -19,8 +19,9 @@ class PostPolicy
         //
     }
 
-    public function delete(User $user)
+
+    public function delete(User $user, User $target_user)
     {
-        return $user->id === 1;
+        return $user->id === 1 && $target_user->id !== 1;
     }
 }

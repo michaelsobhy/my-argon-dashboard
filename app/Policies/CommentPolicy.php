@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -20,8 +19,8 @@ class CommentPolicy
         //
     }
 
-    public function delete(User $user, Comment $comment)
+    public function delete(User $user)
     {
-        return $user->id === $comment->user_id;
+        return $user->id === 1;
     }
 }

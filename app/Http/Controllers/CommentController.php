@@ -14,6 +14,14 @@ class CommentController extends Controller
     }
 
 
+    public function index()
+    {
+        $comments = Comment::orderBy('created_at', 'desc')->with(['user', 'post'])->paginate(10);
+        return view('tables.comments', [
+            'comments' => $comments
+        ]);
+    }
+
     public function store(Post $post, Request $request)
     {
         $this->validate($request, [
