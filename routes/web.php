@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +37,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
     Route::get('users', [UserController::class, 'index'])->name('users');
-    Route::post('users/{user}', [UserController::class, 'destroy'])->name('users.delete');
+    Route::post('users/{target_user}', [UserController::class, 'destroy'])->name('users.delete');
 	Route::get('upgrade', function () {return view('pages.upgrade');})->name('upgrade');
 	 Route::get('map', function () {return view('pages.maps');})->name('map');
 	 Route::get('icons', function () {return view('pages.icons');})->name('icons');
@@ -44,6 +45,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('posts/{post}', [PostController::class, 'destroy'])->name('posts.delete');
     Route::get('comments', [CommentController::class, 'index'])->name('comments');
     Route::post('comments/{comment}', [CommentController::class, 'destroy'])->name('comments.delete');
+    Route::get('likes', [LikeController::class, 'index'])->name('likes');
+    Route::post('likes/{like}', [LikeController::class, 'destroy'])->name('likes.delete');
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 

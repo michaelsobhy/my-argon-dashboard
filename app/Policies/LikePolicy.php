@@ -5,7 +5,7 @@ namespace App\Policies;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class UserPolicy
+class LikePolicy
 {
     use HandlesAuthorization;
 
@@ -19,10 +19,8 @@ class UserPolicy
         //
     }
 
-
-    public function delete(User $user, User $target_user)
+    public function delete(User $user)
     {
-//        dd($user);
-        return $user->id === 1 && $target_user->id !== 1;
+        return $user->id === 1;
     }
 }

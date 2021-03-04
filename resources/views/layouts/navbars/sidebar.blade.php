@@ -106,6 +106,11 @@
                                     {{ __('comments') }}
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('likes') }}">
+                                    {{ __('likes') }}
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>

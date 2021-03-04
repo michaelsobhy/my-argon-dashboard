@@ -43,11 +43,11 @@
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                         <form action="{{ route('users.delete', $user) }}" method="post" class="p-3 inline">
                                             @csrf
-                                            <button type="submit">delete</button>
+                                            <button class="dropdown-item" type="submit">delete</button>
                                         </form>
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
-                                        <a class="dropdown-item" href="#">Something else here</a>
+{{--                                        <a class="dropdown-item" href="#">Action</a>--}}
+{{--                                        <a class="dropdown-item" href="#">Another action</a>--}}
+{{--                                        <a class="dropdown-item" href="#">Something else here</a>--}}
                                     </div>
                                 </div>
                             </td>

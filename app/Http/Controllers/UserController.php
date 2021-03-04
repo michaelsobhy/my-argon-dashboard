@@ -59,9 +59,10 @@ class UserController extends Controller
 
     public function destroy(User $target_user)
     {
-        $this->authorize('delete', $target_user);
+//        dd($target_user);
+        $this->authorize('delete', [$target_user, auth()->user()]);
 
-        $user->delete();
+        $target_user->delete();
 
         return back();
     }

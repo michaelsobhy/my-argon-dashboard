@@ -7,36 +7,31 @@
             <table class="table align-items-center">
                 <thead class="thead-light">
                 <tr>
-                    <th scope="col" class="sort" data-sort="comment_id">comment_id</th>
+                    <th scope="col" class="sort" data-sort="like_id">like_id</th>
                     <th scope="col" class="sort" data-sort="user_id">user_id</th>
                     <th scope="col" class="sort" data-sort="username">username</th>
                     <th scope="col" class="sort" data-sort="post_id">post_id</th>
-                    <th scope="col" class="sort" data-sort="body">body</th>
                     <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
-                @if($comments -> count())
-                    @foreach($comments as $comment)
+                @if($likes -> count())
+                    @foreach($likes as $like)
                         <tr>
-                            <td class="comment_id">
-                                {{ $comment->id }}
+                            <td class="like_id">
+                                {{ $like->id }}
                             </td>
 
                             <td class="user_id">
-                                {{ $comment->user->id }}
+                                {{ $like->user->id }}
                             </td>
 
                             <td class="username">
-                                {{ $comment->user->username }}
+                                {{ $like->user->username }}
                             </td>
 
                             <td class="post_id">
-                                {{ $comment->post_id }}
-                            </td>
-
-                            <td class="body">
-                                {{ $comment->body }}
+                                {{ $like->post_id }}
                             </td>
 
                             <td class="text-right">
@@ -46,7 +41,7 @@
                                         <i class="fas fa-ellipsis-v"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        <form action="{{ route('comments.delete', $comment) }}" method="post" class="p-3 inline">
+                                        <form action="{{ route('likes.delete', $like) }}" method="post" class="p-3 inline">
                                             @csrf
                                             <button class="dropdown-item" type="submit">delete</button>
                                         </form>
