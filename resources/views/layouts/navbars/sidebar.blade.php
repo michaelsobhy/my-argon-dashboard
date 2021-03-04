@@ -86,41 +86,41 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="fab fa-laravel" style="color: #f4645f;"></i>
-                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Laravel Examples') }}</span>
+                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Tables') }}</span>
                     </a>
 
                     <div class="collapse show" id="navbar-examples">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile.edit') }}">
-                                    {{ __('User profile') }}
+                                <a class="nav-link" href="{{ route('posts') }}">
+                                    {{ __('posts') }}
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
-                                    {{ __('User Management') }}
+                                <a class="nav-link" href="{{ route('users') }}">
+                                    {{ __('users') }}
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('table') }}">
-                      <i class="ni ni-bullet-list-67 text-default"></i>
-                      <span class="nav-link-text">Tables</span>
-                    </a>
-                </li>
+{{--                <li class="nav-item">--}}
+{{--                    <a class="nav-link" href="{{ route('table') }}">--}}
+{{--                      <i class="ni ni-bullet-list-67 text-default"></i>--}}
+{{--                      <span class="nav-link-text">Tables</span>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
                 <li class="nav-item">
                     <a class="nav-link" href="#">
                         <i class="ni ni-circle-08 text-pink"></i> {{ __('Register') }}
                     </a>
                 </li>
-                <li class="nav-item mb-5 mr-4 ml-4 pl-1 bg-danger" style="position: absolute; bottom: 0;">
-                    <a class="nav-link text-white" href="https://www.creative-tim.com/product/argon-dashboard-pro-laravel" target="_blank">
-                        <i class="ni ni-cloud-download-95"></i> Upgrade to PRO
-                    </a>
-                </li>
+{{--                <li class="nav-item mb-5 mr-4 ml-4 pl-1 bg-danger" style="position: absolute; bottom: 0;">--}}
+{{--                    <a class="nav-link text-white" href="https://www.creative-tim.com/product/argon-dashboard-pro-laravel" target="_blank">--}}
+{{--                        <i class="ni ni-cloud-download-95"></i> Upgrade to PRO--}}
+{{--                    </a>--}}
+{{--                </li>--}}
             </ul>
             <!-- Divider -->
             <hr class="my-3">

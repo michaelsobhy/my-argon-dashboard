@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,11 +34,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
+    Route::get('users', [UserController::class, 'index'])->name('users');
+    Route::post('users/{user}', [UserController::class, 'destroy'])->name('users.delete');
 	Route::get('upgrade', function () {return view('pages.upgrade');})->name('upgrade');
 	 Route::get('map', function () {return view('pages.maps');})->name('map');
 	 Route::get('icons', function () {return view('pages.icons');})->name('icons');
-    Route::get('table-list', [PostController::class, 'index'])->name('table');
-    Route::post('table-list/{post}', [PostController::class, 'destroy'])->name('table.delete');
+    Route::get('posts', [PostController::class, 'index'])->name('posts');
+    Route::post('posts/{post}', [PostController::class, 'destroy'])->name('posts.delete');
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 

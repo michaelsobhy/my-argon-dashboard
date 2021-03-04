@@ -41,7 +41,7 @@
                                         <i class="fas fa-ellipsis-v"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        <form action="{{ route('table.delete', $post) }}" method="post" class="p-3 inline">
+                                        <form action="{{ route('posts.delete', $post) }}" method="post" class="p-3 inline">
                                             @csrf
                                             <button type="submit">delete</button>
                                         </form>
