@@ -11,6 +11,7 @@
                     <th scope="col" class="sort" data-sort="user_id">user_id</th>
                     <th scope="col" class="sort" data-sort="username">username</th>
                     <th scope="col" class="sort" data-sort="body">body</th>
+                    <th scope="col" class="sort" data-sort="deleted_at">deleted_at</th>
                     <th scope="col"></th>
                 </tr>
                 </thead>
@@ -34,20 +35,33 @@
                                 {{ $post->body }}
                             </td>
 
+                            <td class="deleted_at">
+                                {{ $post->deleted_at }}
+                            </td>
+
                             <td class="text-right">
                                 <div class="dropdown">
-                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown"
+                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                       data-toggle="dropdown"
                                        aria-haspopup="true" aria-expanded="false">
                                         <i class="fas fa-ellipsis-v"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        <form action="{{ route('posts.delete', $post) }}" method="post" class="p-3 inline">
+                                        @if(! $post->trashed())
+                                            <form action="{{ route('posts.unpublish', $post) }}" method="post"
+                                                  class="p-3 inline">
+                                                @csrf
+                                                <button class="dropdown-item" type="submit">unpublish</button>
+                                            </form>
+                                        @endif
+                                        <form action="{{ route('posts.delete', $post->id) }}" method="post"
+                                              class="p-3 inline">
                                             @csrf
                                             <button class="dropdown-item" type="submit">delete</button>
                                         </form>
-{{--                                        <a class="dropdown-item" href="#">Action</a>--}}
-{{--                                        <a class="dropdown-item" href="#">Another action</a>--}}
-{{--                                        <a class="dropdown-item" href="#">Something else here</a>--}}
+                                        {{--                                        <a class="dropdown-item" href="#">Action</a>--}}
+                                        {{--                                        <a class="dropdown-item" href="#">Another action</a>--}}
+                                        {{--                                        <a class="dropdown-item" href="#">Something else here</a>--}}
                                     </div>
                                 </div>
                             </td>
@@ -56,9 +70,12 @@
                 @endif
 
 
-
                 </tbody>
             </table>
+            <div class="d-flex justify-content-center">
+                {!! $posts->links() !!}
+            </div>
+
         </div>
 
     </div>

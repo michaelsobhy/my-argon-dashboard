@@ -33,20 +33,21 @@ Auth::routes();
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
-	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
-	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
-	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
+    Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
+    Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
+    Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
     Route::get('users', [UserController::class, 'index'])->name('users');
-    Route::post('users/{target_user}', [UserController::class, 'destroy'])->name('users.delete');
-	Route::get('upgrade', function () {return view('pages.upgrade');})->name('upgrade');
-	 Route::get('map', function () {return view('pages.maps');})->name('map');
-	 Route::get('icons', function () {return view('pages.icons');})->name('icons');
+    Route::post('users/{target_user}/unpublish', [UserController::class, 'unpublish'])->name('users.unpublish');
+    Route::post('users/{target_user}/delete', [UserController::class, 'destroy'])->name('users.delete');
     Route::get('posts', [PostController::class, 'index'])->name('posts');
-    Route::post('posts/{post}', [PostController::class, 'destroy'])->name('posts.delete');
+    Route::post('posts/{post}/unpublish', [PostController::class, 'unpublish'])->name('posts.unpublish');
+    Route::post('posts/{post}/delete', [PostController::class, 'destroy'])->name('posts.delete');
     Route::get('comments', [CommentController::class, 'index'])->name('comments');
-    Route::post('comments/{comment}', [CommentController::class, 'destroy'])->name('comments.delete');
+    Route::post('comments/{comment}/unpublish', [CommentController::class, 'unpublish'])->name('comments.unpublish');
+    Route::post('comments/{comment}/delete', [CommentController::class, 'destroy'])->name('comments.delete');
     Route::get('likes', [LikeController::class, 'index'])->name('likes');
-    Route::post('likes/{like}', [LikeController::class, 'destroy'])->name('likes.delete');
-	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
+    Route::post('likes/{like}/unpublish', [LikeController::class, 'unpublish'])->name('likes.unpublish');
+    Route::post('likes/{like}/delete', [LikeController::class, 'destroy'])->name('likes.delete');
+    Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 

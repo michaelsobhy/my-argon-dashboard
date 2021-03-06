@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -16,7 +15,9 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::orderBy('created_at', 'desc')->with(['user', 'likes', 'comments'])->paginate(10);
+        $posts = Post::withTrashed()->orderBy('created_at', 'desc')->with(['user' => function($query) {
+            $query->withTrashed();
+        }, 'likes', 'comments'])->paginate(10);
         return view('tables.posts', [
             'posts' => $posts
         ]);
@@ -39,12 +40,21 @@ class PostController extends Controller
 
         return back();
     }
-
-    public function destroy(Post $post)
+    public function unpublish(Post $post)
     {
         $this->authorize('delete', $post);
 
         $post->delete();
+
+        return back();
+    }
+
+    public function destroy($id)
+    {
+        $post = Post::withTrashed()->find($id);
+        $this->authorize('delete', $post);
+
+        $post->forceDelete();
 
         return back();
     }

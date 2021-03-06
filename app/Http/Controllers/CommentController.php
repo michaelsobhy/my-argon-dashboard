@@ -10,13 +10,15 @@ class CommentController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth'])->only(['store', 'destroy']);
+        $this->middleware(['auth'])->only(['store', 'destroy', 'unpublish']);
     }
 
 
     public function index()
     {
-        $comments = Comment::orderBy('created_at', 'desc')->with(['user', 'post'])->paginate(10);
+        $comments = Comment::withTrashed()->orderBy('created_at', 'desc')->with(['user' => function($query) {
+            $query->withTrashed();
+        }, 'post'])->paginate(10);
         return view('tables.comments', [
             'comments' => $comments
         ]);
@@ -37,11 +39,21 @@ class CommentController extends Controller
         return back();
     }
 
-    public function destroy(Comment $comment)
+    public function unpublish(Comment $comment)
     {
         $this->authorize('delete', $comment);
 
         $comment->delete();
+
+        return back();
+    }
+
+    public function destroy($id)
+    {
+        $comment = Comment::withTrashed()->find($id);
+        $this->authorize('delete', $comment);
+
+        $comment->forceDelete();
 
         return back();
     }

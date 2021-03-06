@@ -12,6 +12,7 @@
                     <th scope="col" class="sort" data-sort="username">username</th>
                     <th scope="col" class="sort" data-sort="post_id">post_id</th>
                     <th scope="col" class="sort" data-sort="body">body</th>
+                    <th scope="col" class="sort" data-sort="deleted_at">deleted_at</th>
                     <th scope="col"></th>
                 </tr>
                 </thead>
@@ -39,20 +40,33 @@
                                 {{ $comment->body }}
                             </td>
 
+                            <td class="deleted_at">
+                                {{ $comment->deleted_at }}
+                            </td>
+
                             <td class="text-right">
                                 <div class="dropdown">
-                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown"
+                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                       data-toggle="dropdown"
                                        aria-haspopup="true" aria-expanded="false">
                                         <i class="fas fa-ellipsis-v"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        <form action="{{ route('comments.delete', $comment) }}" method="post" class="p-3 inline">
+                                        @if(! $comment->trashed())
+                                            <form action="{{ route('comments.unpublish', $comment) }}" method="post"
+                                                  class="p-3 inline">
+                                                @csrf
+                                                <button class="dropdown-item" type="submit">unpublish</button>
+                                            </form>
+                                        @endif
+                                        <form action="{{ route('comments.delete', $comment->id) }}" method="post"
+                                              class="p-3 inline">
                                             @csrf
                                             <button class="dropdown-item" type="submit">delete</button>
                                         </form>
-{{--                                        <a class="dropdown-item" href="#">Action</a>--}}
-{{--                                        <a class="dropdown-item" href="#">Another action</a>--}}
-{{--                                        <a class="dropdown-item" href="#">Something else here</a>--}}
+                                        {{--                                        <a class="dropdown-item" href="#">Action</a>--}}
+                                        {{--                                        <a class="dropdown-item" href="#">Another action</a>--}}
+                                        {{--                                        <a class="dropdown-item" href="#">Something else here</a>--}}
                                     </div>
                                 </div>
                             </td>
@@ -61,9 +75,11 @@
                 @endif
 
 
-
                 </tbody>
             </table>
+            <div class="d-flex justify-content-center">
+                {!! $comments->links() !!}
+            </div>
         </div>
 
     </div>

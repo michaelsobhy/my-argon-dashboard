@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
 use App\Models\User;
-use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -24,7 +22,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::paginate(10);
+        $users = User::withTrashed()->paginate(10);
         return view('tables.users', [
             'users' => $users
         ]);
@@ -57,9 +55,16 @@ class UserController extends Controller
         return back();
     }
 
-    public function destroy(User $target_user)
+//    public function destroy(User $target_user)
+//    {
+//        $this->authorize('delete', [$target_user, auth()->user()]);
+//
+//        $target_user->forceDelete();
+//
+//        return back();
+//    }
+    public function unpublish(User $target_user)
     {
-//        dd($target_user);
         $this->authorize('delete', [$target_user, auth()->user()]);
 
         $target_user->delete();
@@ -67,6 +72,15 @@ class UserController extends Controller
         return back();
     }
 
+    public function destroy($id)
+    {
+        $target_user = User::withTrashed()->find($id);
+        $this->authorize('delete', $target_user);
+
+        $target_user->forceDelete();
+
+        return back();
+    }
 
 
 //php artisan make:model -m -f to create a model, migration and factory

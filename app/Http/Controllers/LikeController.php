@@ -16,7 +16,9 @@ class LikeController extends Controller
 
     public function index()
     {
-        $likes = Like::orderBy('created_at', 'desc')->with(['user', 'post'])->paginate(10);
+        $likes = Like::withTrashed()->orderBy('created_at', 'desc')->with(['user' => function($query) {
+            $query->withTrashed();
+        }, 'post'])->paginate(10);
         return view('tables.likes', [
             'likes' => $likes
         ]);
@@ -24,18 +26,32 @@ class LikeController extends Controller
 
     public function store(Post $post, Request $request)
     {
-        $post->likes()->create([
-            'user_id' => $request->user()->id
-        ]);
+        $deletedLike = Like::onlyTrashed()->where('user_id', $request->user()->id)->where('post_id', $post->id);
+        if ($deletedLike->count() === 0) {
+            $post->likes()->create([
+                'user_id' => $request->user()->id
+            ]);
+        } else {
+            $deletedLike->restore();
+        }
 
         return back();
     }
-
-    public function destroy(Like $like)
+    public function unpublish(Like $like)
     {
         $this->authorize('delete', $like);
 
         $like->delete();
+
+        return back();
+    }
+
+    public function destroy($id)
+    {
+        $like = Like::withTrashed()->find($id);
+        $this->authorize('delete', $like);
+
+        $like->forceDelete();
 
         return back();
     }
