@@ -55,14 +55,16 @@ class UserController extends Controller
         return back();
     }
 
-//    public function destroy(User $target_user)
-//    {
-//        $this->authorize('delete', [$target_user, auth()->user()]);
-//
-//        $target_user->forceDelete();
-//
-//        return back();
-//    }
+    public function publish($id)
+    {
+        $target_user = User::withTrashed()->find($id);
+        $this->authorize('restore', $target_user);
+
+        $target_user->restore();
+
+        return back();
+    }
+
     public function unpublish(User $target_user)
     {
         $this->authorize('delete', [$target_user, auth()->user()]);
@@ -75,7 +77,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $target_user = User::withTrashed()->find($id);
-        $this->authorize('delete', $target_user);
+        $this->authorize('forceDelete', [$target_user, auth()->user()]);
 
         $target_user->forceDelete();
 

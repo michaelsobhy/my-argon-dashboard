@@ -23,4 +23,14 @@ class PostPolicy
     {
         return $user->id === 1;
     }
+
+    public function forceDelete(User $user)
+    {
+        return $user->id === 1;
+    }
+
+    public function restore(User $user)
+    {
+        return $user->id === 1;
+    }
 }

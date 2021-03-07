@@ -58,8 +58,13 @@
                                                 @csrf
                                                 <button class="dropdown-item" type="submit">unpublish</button>
                                             </form>
-                                        @endif
-                                        <form action="{{ route('comments.delete', $comment->id) }}" method="post"
+                                        @else
+                                            <form action="{{ route('comments.publish', $comment->id) }}" method="post"
+                                                  class="p-3 inline">
+                                                @csrf
+                                                <button class="dropdown-item" type="submit">publish</button>
+                                            </form>
+                                        @endif                                        <form action="{{ route('comments.delete', $comment->id) }}" method="post"
                                               class="p-3 inline">
                                             @csrf
                                             <button class="dropdown-item" type="submit">delete</button>

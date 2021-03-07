@@ -37,6 +37,17 @@ class LikeController extends Controller
 
         return back();
     }
+
+    public function publish($id)
+    {
+        $like = Like::withTrashed()->find($id);
+        $this->authorize('restore', $like);
+
+        $like->restore();
+
+        return back();
+    }
+
     public function unpublish(Like $like)
     {
         $this->authorize('delete', $like);
@@ -49,7 +60,7 @@ class LikeController extends Controller
     public function destroy($id)
     {
         $like = Like::withTrashed()->find($id);
-        $this->authorize('delete', $like);
+        $this->authorize('forceDelete', $like);
 
         $like->forceDelete();
 

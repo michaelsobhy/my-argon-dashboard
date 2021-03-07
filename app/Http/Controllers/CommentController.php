@@ -39,6 +39,16 @@ class CommentController extends Controller
         return back();
     }
 
+    public function publish($id)
+    {
+        $comment = Comment::withTrashed()->find($id);
+        $this->authorize('restore', $comment);
+
+        $comment->restore();
+
+        return back();
+    }
+
     public function unpublish(Comment $comment)
     {
         $this->authorize('delete', $comment);
@@ -51,7 +61,7 @@ class CommentController extends Controller
     public function destroy($id)
     {
         $comment = Comment::withTrashed()->find($id);
-        $this->authorize('delete', $comment);
+        $this->authorize('forceDelete', $comment);
 
         $comment->forceDelete();
 

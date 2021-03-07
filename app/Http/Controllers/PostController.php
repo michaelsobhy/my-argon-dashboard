@@ -40,6 +40,17 @@ class PostController extends Controller
 
         return back();
     }
+
+    public function publish($id)
+    {
+        $post = Post::withTrashed()->find($id);
+        $this->authorize('restore', $post);
+
+        $post->restore();
+
+        return back();
+    }
+
     public function unpublish(Post $post)
     {
         $this->authorize('delete', $post);
@@ -52,7 +63,7 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::withTrashed()->find($id);
-        $this->authorize('delete', $post);
+        $this->authorize('forceDelete', $post);
 
         $post->forceDelete();
 

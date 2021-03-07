@@ -53,6 +53,12 @@
                                                 @csrf
                                                 <button class="dropdown-item" type="submit">unpublish</button>
                                             </form>
+                                        @else
+                                            <form action="{{ route('users.publish', $user->id) }}" method="post"
+                                                  class="p-3 inline">
+                                                @csrf
+                                                <button class="dropdown-item" type="submit">publish</button>
+                                            </form>
                                         @endif
                                         <form action="{{ route('users.delete', $user->id) }}" method="post"
                                               class="p-3 inline">
